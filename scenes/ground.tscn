@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cl61jdgnn0iy8"]
+
+[ext_resource type="Script" uid="uid://bxbuuc5bhn16g" path="res://endless-runner/scripts/ground.gd" id="1_k1ahn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l2u2q"]
+
+[node name="Ground" type="StaticBody2D" node_paths=PackedStringArray("collision")]
+script = ExtResource("1_k1ahn")
+collision = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(10, 0)
+shape = SubResource("RectangleShape2D_l2u2q")

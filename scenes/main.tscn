@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhfmbpcip10nj"]
+
+[ext_resource type="Script" uid="uid://dakmaxgouggj7" path="res://endless-runner/scripts/main.gd" id="1_pt58i"]
+[ext_resource type="PackedScene" uid="uid://c71ixqam4x3r3" path="res://endless-runner/scenes/player.tscn" id="2_h60la"]
+[ext_resource type="PackedScene" uid="uid://cl61jdgnn0iy8" path="res://endless-runner/scenes/ground.tscn" id="3_h60la"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_pt58i")
+
+[node name="Player" parent="." instance=ExtResource("2_h60la")]
+position = Vector2(26, 564)
+
+[node name="Ground" parent="." instance=ExtResource("3_h60la")]
+position = Vector2(10, 638)
