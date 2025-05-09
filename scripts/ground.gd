@@ -7,8 +7,3 @@ extends StaticBody2D
 func _ready() -> void:
 	collision.shape.size.x = 1000
 	collision.position.x += collision.shape.size.x / 2
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	if abs(player.global_position.x - (global_position.x + collision.shape.size.x / 2)) < 10:
-		pass
