@@ -1,12 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhfmbpcip10nj"]
+[gd_scene load_steps=6 format=3 uid="uid://dhfmbpcip10nj"]
 
 [ext_resource type="Script" uid="uid://dakmaxgouggj7" path="res://endless-runner/scripts/main.gd" id="1_pt58i"]
 [ext_resource type="PackedScene" uid="uid://c71ixqam4x3r3" path="res://endless-runner/scenes/player.tscn" id="2_h60la"]
 [ext_resource type="PackedScene" uid="uid://cl61jdgnn0iy8" path="res://endless-runner/scenes/ground.tscn" id="3_h60la"]
+[ext_resource type="PackedScene" uid="uid://cv35iwq3jdfw3" path="res://endless-runner/scenes/obstacle_manager.tscn" id="4_wgtgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h60la"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Game" type="Node2D"]
 script = ExtResource("1_pt58i")
 
 [node name="Player" parent="." instance=ExtResource("2_h60la")]
@@ -19,5 +20,7 @@ position = Vector2(10, 638)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_h60la")
+
+[node name="ObstacleManager" parent="." instance=ExtResource("4_wgtgy")]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
