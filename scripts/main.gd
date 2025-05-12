@@ -20,33 +20,51 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	# Get left side of screen for offscreen ground objects.
-	camera2d_left = get_viewport().get_camera_2d().get_screen_center_position().x - get_viewport_rect().size.x / 2
-	
 	if player:
+		# Get left side of screen for offscreen ground objects.
+		camera2d_left = get_viewport().get_camera_2d().get_screen_center_position().x - get_viewport_rect().size.x / 2
+	
 		var player_ray : RayCast2D = player.find_child('RayCast2D') if player.has_node('RayCast2D') else null
 		if player_ray and player_ray.is_colliding():
 			current_ground = player_ray.get_collider()
-			var collision = current_ground.find_child('CollisionShape2D') if current_ground.has_node('CollisionShape2D') else null
-			var end = collision.find_child('EndMarker') if collision.has_node('EndMarker') else null
-			grounds[current_ground] = {
-				"pos": current_ground.global_position.x,
-				"end": end,
-				"collision": collision
-			}
+			if current_ground not in grounds:
+				var collision = current_ground.find_child('CollisionShape2D') if current_ground.has_node('CollisionShape2D') else null
+				var end = collision.find_child('EndMarker') if collision.has_node('EndMarker') else null
+				var begin = collision.find_child('BeginMarker') if collision.has_node('BeginMarker') else null
+				
+				grounds[current_ground] = {
+					"pos": current_ground.global_position.x,
+					"begin": begin,
+					"end": end,
+					"collision": collision
+				}
 			ground_collision = current_ground.find_child('CollisionShape2D')
 			area.global_position = Vector2(current_ground.find_child('Marker2D').global_position.x, player.global_position.y)
 		
 		# Remove ground that go off screen (to the left)
 		clean_ground()
+	else:
+		print('Game Over')
+		get_tree().quit()
 		
 func spawn_ground() -> void:
 	var new_ground = ground_scene.instantiate()
-	new_ground.global_position.x = ground_collision.global_position.x + ground_collision.shape.size.x / 2
+	var collision = new_ground.find_child('CollisionShape2D') if new_ground.has_node('CollisionShape2D') else null
+	var begin = collision.find_child('BeginMarker') if collision.has_node('BeginMarker') else null
+	var end = collision.find_child('EndMarker') if collision.has_node('EndMarker') else null
+	
+	grounds[new_ground] = {
+		"pos": new_ground.global_position.x,
+		"begin": begin,
+		"end": end,
+		"collision": collision
+	}
+			
+	new_ground.global_position.x = ground_collision.global_position.x + ground_collision.shape.size.x
 	new_ground.global_position.y = ground_collision.global_position.y
 	self.call_deferred('add_child', new_ground)
 	
-	obstacle_manager.spawn_obstacle(current_ground, grounds)
+	obstacle_manager.spawn_obstacle(new_ground, grounds)
 
 func clean_ground() -> void:
 	for ground in grounds:
@@ -56,5 +74,5 @@ func clean_ground() -> void:
 				ground.queue_free()
 				grounds.erase(ground)
 	
-func _on_area_2d_body_entered(body: Node2D) -> void:
+func _on_area_2d_body_entered(_body: Node2D) -> void:
 	spawn_ground()

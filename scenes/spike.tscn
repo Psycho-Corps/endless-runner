@@ -1,8 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3alncboymtd4"]
+[gd_scene load_steps=4 format=3 uid="uid://c3alncboymtd4"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ie376"]
+[ext_resource type="Script" uid="uid://bfqqv2bx446iu" path="res://endless-runner/scripts/spike.gd" id="1_705dh"]
+[ext_resource type="Texture2D" uid="uid://mtnqtivpxys4" path="res://icon.svg" id="1_utn1i"]
 
-[node name="Spike" type="StaticBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_utn1i"]
+size = Vector2(20, 21)
+
+[node name="Spike" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_705dh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -10.75)
+scale = Vector2(0.164062, 0.167969)
+texture = ExtResource("1_utn1i")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_ie376")
+position = Vector2(0, -10.5)
+shape = SubResource("RectangleShape2D_utn1i")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

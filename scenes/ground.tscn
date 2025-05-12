@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cl61jdgnn0iy8"]
+[gd_scene load_steps=3 format=3 uid="uid://cl61jdgnn0iy8"]
 
 [ext_resource type="Script" uid="uid://bxbuuc5bhn16g" path="res://endless-runner/scripts/ground.gd" id="1_k1ahn"]
-[ext_resource type="Texture2D" uid="uid://mtnqtivpxys4" path="res://icon.svg" id="2_f7566"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2u2q"]
 size = Vector2(1000, 20)
@@ -13,13 +12,11 @@ collision = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_l2u2q")
 
+[node name="BeginMarker" type="Marker2D" parent="CollisionShape2D"]
+position = Vector2(-500, 0)
+
 [node name="EndMarker" type="Marker2D" parent="CollisionShape2D"]
 position = Vector2(500, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D/EndMarker"]
-position = Vector2(0, 3.93391e-06)
-scale = Vector2(0.3125, 0.3125)
-texture = ExtResource("2_f7566")
-
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(250, 0)
+position = Vector2(-413, 0)

@@ -11,10 +11,10 @@
 script = ExtResource("1_pt58i")
 
 [node name="Player" parent="." instance=ExtResource("2_h60la")]
-position = Vector2(26, 564)
+position = Vector2(11, 564)
 
 [node name="Ground" parent="." instance=ExtResource("3_h60la")]
-position = Vector2(10, 638)
+position = Vector2(500, 638)
 
 [node name="Area2D" type="Area2D" parent="."]
 

@@ -6,4 +6,3 @@ extends StaticBody2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	collision.shape.size.x = 1000
-	collision.position.x += collision.shape.size.x / 2

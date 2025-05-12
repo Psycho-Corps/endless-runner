@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxceqsaand8rf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_si47o"]
+
+[node name="Node2D" type="StaticBody2D"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_si47o")
