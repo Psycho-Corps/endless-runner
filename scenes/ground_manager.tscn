@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://1u31oww67a02"]
+
+[ext_resource type="Script" uid="uid://bwsyw0up853e0" path="res://endless-runner/scripts/ground_manager.gd" id="1_yk4ai"]
+
+[node name="GroundManager" type="Node2D"]
+script = ExtResource("1_yk4ai")

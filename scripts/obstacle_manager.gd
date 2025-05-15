@@ -1,3 +1,4 @@
+class_name ObstacleManager
 extends Node2D
 
 var obstacles : Dictionary = {
@@ -6,11 +7,14 @@ var obstacles : Dictionary = {
 	"floating_spike": {"weight": 2, "type": 'air', "scene": preload("res://endless-runner/scenes/floating_spike.tscn")}
 }
 
+var obstacle_list : Array = []
+var prev_obstacle = null
+var curr_obstacle = null
+
 func random_obstacle() -> Array:
 	var total_weight : int = 0
 	for obstacle in obstacles:
-		if obstacles[obstacle]['type'] == "ground":
-			total_weight += obstacles[obstacle]['weight']
+		total_weight += obstacles[obstacle]['weight']
 	var rand = randi() % total_weight
 	
 	var running_total : int = 0
@@ -21,25 +25,33 @@ func random_obstacle() -> Array:
 	
 	return []
 
-func spawn_obstacle(new_ground : StaticBody2D, grounds : Dictionary) -> void:
+func spawn_obstacle(new_ground : StaticBody2D, grounds : Dictionary, player : CharacterBody2D) -> void:
 	var spawn_point : Vector2
-	var prev_obstacle = null
-	var curr_obstacle = null
+	var distance_from_player : float = player.curr_speed * 1.5
+	var ground_position = grounds[new_ground]['collision'].global_position.y
+	var ground_size = grounds[new_ground]['collision'].shape.size.y / 2
 	
-	for i in range(3):
+	for i in range(10):
 		var obstacle_data : Array = random_obstacle()
 		var obstacle = obstacle_data[0].instantiate()
 		var obstacle_type : String = obstacle_data[1]
-		if curr_obstacle:
-			prev_obstacle = curr_obstacle
+		
+		if obstacle_list.is_empty():
 			curr_obstacle = obstacle
-			spawn_point = Vector2(randf_range(prev_obstacle.global_position.x + 200, prev_obstacle.global_position.x + 400), grounds[new_ground]['collision'].global_position.y - grounds[new_ground]['collision'].shape.size.y / 2)
+			obstacle_list.append(curr_obstacle)
+			if obstacle_type == 'ground':
+				spawn_point = Vector2(get_parent().camera2d_right + 50, ground_position - ground_size)
+			elif obstacle_type == 'air':
+				spawn_point = Vector2(get_parent().camera2d_right + 50, ground_position - 100)
 			curr_obstacle.global_position = spawn_point
 			get_parent().call_deferred('add_child', curr_obstacle)
-			print(prev_obstacle)
-			print(spawn_point)	
 			continue
+		prev_obstacle = curr_obstacle
 		curr_obstacle = obstacle
-		spawn_point = Vector2(randf_range(grounds[new_ground]['begin'].global_position.x, grounds[new_ground]['begin'].global_position.x + 100), grounds[new_ground]['collision'].global_position.y - grounds[new_ground]['collision'].shape.size.y / 2)
+		obstacle_list.append(curr_obstacle)
+		if obstacle_type == 'ground':
+			spawn_point = Vector2(prev_obstacle.global_position.x + distance_from_player, ground_position - ground_size)
+		elif obstacle_type == 'air':
+			spawn_point = Vector2(prev_obstacle.global_position.x + distance_from_player, ground_position - 100)
 		curr_obstacle.global_position = spawn_point
 		get_parent().call_deferred('add_child', curr_obstacle)

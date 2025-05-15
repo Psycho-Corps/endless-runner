@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c71ixqam4x3r3"]
+[gd_scene load_steps=6 format=3 uid="uid://c71ixqam4x3r3"]
 
 [ext_resource type="Texture2D" uid="uid://mtnqtivpxys4" path="res://icon.svg" id="1_ctybu"]
 [ext_resource type="Script" uid="uid://smmrdsmggyx" path="res://endless-runner/scripts/player.gd" id="1_uuuee"]
 [ext_resource type="Script" uid="uid://vljkaieiqdwv" path="res://endless-runner/components/health_component.gd" id="3_w787q"]
+[ext_resource type="Script" uid="uid://d4kwhxjj4x4p8" path="res://endless-runner/scripts/speed_label.gd" id="4_26fio"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uuuee"]
 height = 128.0
@@ -32,6 +33,17 @@ texture = ExtResource("1_ctybu")
 shape = SubResource("CapsuleShape2D_uuuee")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 648
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 1000)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -27.0
+offset_top = -121.0
+offset_right = 29.0
+offset_bottom = -98.0
+text = "Speed: "
+script = ExtResource("4_26fio")

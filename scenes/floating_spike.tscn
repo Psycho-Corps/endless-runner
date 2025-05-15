@@ -1,9 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://cxceqsaand8rf"]
+[gd_scene load_steps=3 format=3 uid="uid://cxceqsaand8rf"]
+
+[ext_resource type="Script" uid="uid://coapqufghey18" path="res://endless-runner/scripts/floating_spike.gd" id="1_ffvqu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_si47o"]
 
-[node name="Node2D" type="StaticBody2D"]
+[node name="Floating Spike" type="Area2D"]
 collision_layer = 2
+script = ExtResource("1_ffvqu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_si47o")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
